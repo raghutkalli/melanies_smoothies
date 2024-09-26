@@ -2,6 +2,8 @@
 import streamlit as st
 # from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
+from snowflake.snowpark.session import Session
+import json
 import requests
 
 # Write directly to the app
@@ -15,7 +17,11 @@ name_on_order = st.text_input("Name on Smoothie")
 st.write("The name on your Smoothie will be", name_on_order)
 
 
-session = get_active_session()
+# session = get_active_session()
+try:
+  session = get_active_session()
+except Exception as e:
+  st.error(f"Error establishing Snowflake connection: {e}")
 # my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
 pd_df = my_dataframe.to_pandas()
 #st.dataframe(data=my_dataframe, use_container_width=True)
@@ -38,7 +44,11 @@ if ingredients_list:
         # st.subheader (fruit_chosen Nutrition Information')
         st.subheader(fruit_chosen+ 'Nutrition Information')
         fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_chosen)
-        fv_df= st.dataframe(data=fruityvice_response.json(), use_container_width=True)
+        if fruityvice_response.status_code == 200:
+            fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
+        else:
+            st.write("Error retrieving data from Fruityvice API.")        
+      
 
     #st.write(ingredients_string)
 
