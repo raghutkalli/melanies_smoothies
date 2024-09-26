@@ -3,6 +3,7 @@ import streamlit as st
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 from snowflake.connector import connect
+from snowflake.snowpark import Snowpark
 
 # Replace with your Snowflake connection details
 account = "YOMXSHP-JDB77382"
@@ -13,14 +14,7 @@ database = "SMOOTHIES"
 schema = "PUBLIC"
 
 # Create a connection context
-ctx = connect(
-    account=account,
-    user=user,
-    password=password,
-    warehouse=warehouse,
-    database=database,
-    schema=schema
-)
+ctx = Snowpark.builder.configs(account=account, user=user, password=password, warehouse=warehouse, database=database, schema=schema).create()
 
 # Create a Snowflake session from the context
 session = ctx.cursor()
