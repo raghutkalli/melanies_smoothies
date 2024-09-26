@@ -4,6 +4,9 @@ from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 from snowflake.snowpark import Session
 
+# Initialize the session
+session = Session.builder.configs(config).create()
+
 # Write directly to the app
 st.title("Customize Your Smoothie!")
 st.write(
