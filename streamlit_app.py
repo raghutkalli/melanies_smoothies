@@ -2,6 +2,21 @@
 import streamlit as st
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
+from snowflake.snowpark import Session
+
+# Access Snowflake secrets
+config = {
+    "account": st.secrets["connections.snowflake"]["YOMXSHP_JDB77382"],
+    "user": st.secrets["connections.snowflake"]["RAGHUKALLI"],
+    "password": st.secrets["connections.snowflake"]["Samhita@2011Bgm"],
+    "role": st.secrets["connections.snowflake"]["SYSADMIN"],
+    "warehouse": st.secrets["connections.snowflake"]["COMPUTE_WH"],
+    "database": st.secrets["connections.snowflake"]["SMOOTHIES"],
+    "schema": st.secrets["connections.snowflake"]["PUBLIC"]
+}
+
+# Initialize the session
+session = Session.builder.configs(config).create()
 
 # Write directly to the app
 st.title("Customize Your Smoothie!")
