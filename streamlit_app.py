@@ -22,8 +22,6 @@ ingredients_list = st.multiselect(
     'Choose up to 5 ingredients: '
     ,fruit_options
     , max_selections=5)
---, my_dataframe
-
 
 if ingredients_list:
     #st.write(ingredients_list)
