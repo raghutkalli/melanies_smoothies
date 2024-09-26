@@ -2,22 +2,10 @@
 import streamlit as st
 from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
-from snowflake.connector import connect
 from snowflake.snowpark import Snowpark
 
-# Replace with your Snowflake connection details
-account = "YOMXSHP-JDB77382"
-user = "RAGHUKALLI"
-password = "Samhita@2011Bgm"
-warehouse = "COMPUTE_WH"
-database = "SMOOTHIES"
-schema = "PUBLIC"
-
-# Create a connection context
-ctx = Snowpark.builder.configs(account=account, user=user, password=password, warehouse=warehouse, database=database, schema=schema).create()
-
-# Create a Snowflake session from the context
-session = ctx.cursor()
+# Create a Snowpark session from the connector session
+snowpark = Snowpark.builder.session(session).create()
 
 # Write directly to the app
 st.title("Customize Your Smoothie!")
