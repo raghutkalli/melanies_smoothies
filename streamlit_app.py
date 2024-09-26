@@ -23,9 +23,9 @@ st.write("The name on your Smoothie will be", name_on_order)
 if 'session' not in globals():
     session = Session.builder.configs(connection_parameters).create()
   
-my_dataframe = session.table("smoothies.public.fruit_options").select(F.col('FRUIT_NAME'), F.col('SEARCH_ON'))
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
 pd_df = my_dataframe.to_pandas()
-st.dataframe(pd_df)
+#st.dataframe(pd_df)
 #st.dataframe(data=my_dataframe, use_container_width=True)
 #st.stop()
 
@@ -46,10 +46,8 @@ if ingredients_list:
         # st.subheader (fruit_chosen Nutrition Information')
         st.subheader(fruit_chosen+ 'Nutrition Information')
         fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_chosen)
-        if fruityvice_response.status_code == 200:
-            fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
-        else:
-            st.write("Error retrieving data from Fruityvice API.")        
+        fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
+      
       
 
     #st.write(ingredients_string)
