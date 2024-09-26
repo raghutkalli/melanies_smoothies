@@ -8,7 +8,8 @@ import json
 import requests
 
 # Initialize the Snowflake session
-session = Session.builder.configs(connection_parameters).create()
+cnx = st.connection("snowflake")
+session = cnx.session()
 
 # Write directly to the app
 st.title("Customize Your Smoothie!")
@@ -22,12 +23,6 @@ st.write("The name on your Smoothie will be", name_on_order)
 
 
 # session = get_active_session()
-# Check if the session object already exists or manually initialize
-# Ensure session is correctly initialized by Streamlit
-if 'session' in globals():
-    st.write("Session is active.")
-else:
-    st.write("No active session.")
   
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
 pd_df = my_dataframe.to_pandas()
