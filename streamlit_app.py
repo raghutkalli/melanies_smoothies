@@ -2,6 +2,7 @@
 import streamlit as st
 # from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
+from snowflake.snowpark import functions as F
 from snowflake.snowpark.session import Session
 import json
 import requests
@@ -18,9 +19,13 @@ st.write("The name on your Smoothie will be", name_on_order)
 
 
 # session = get_active_session()
+# Check if the session object already exists or manually initialize
+if 'session' not in globals():
+    session = Session.builder.configs(connection_parameters).create()
   
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
+my_dataframe = session.table("smoothies.public.fruit_options").select(F.col('FRUIT_NAME'), F.col('SEARCH_ON'))
 pd_df = my_dataframe.to_pandas()
+st.dataframe(pd_df)
 #st.dataframe(data=my_dataframe, use_container_width=True)
 #st.stop()
 
