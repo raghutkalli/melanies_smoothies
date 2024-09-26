@@ -7,6 +7,9 @@ from snowflake.snowpark.session import Session
 import json
 import requests
 
+# Initialize the Snowflake session
+session = Session.builder.configs(connection_parameters).create()
+
 # Write directly to the app
 st.title("Customize Your Smoothie!")
 st.write(
